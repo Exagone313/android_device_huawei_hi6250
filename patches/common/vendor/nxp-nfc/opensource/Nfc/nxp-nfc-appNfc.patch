@@ -1,9 +1,16 @@
-From 0b080e85607d088023c818671b2d4d7dee51a524 Mon Sep 17 00:00:00 2001
+From b846659c50bbeb6493d232f3dd0401039cd2068d Mon Sep 17 00:00:00 2001
 From: Meticulus <theonejohnnyd@gmail.com>
-Date: Fri, 2 Jun 2017 07:06:38 -0500
-Subject: [PATCH] nxp-nfc-appNfc
+Date: Wed, 14 Jun 2017 07:59:11 -0500
+Subject: [PATCH] "nxp-nfc-appNfc _______________________________
 
-Change-Id: I4183ceb54f99bb8912fc7362e098e964d35f3c4a
+*Previous From 0b080e85607d088023c818671b2d4d7dee51a524 Mon Sep 17 00:00:00 2001
+*Previous From: Meticulus <theonejohnnyd@gmail.com>
+*Previous Date: Fri, 2 Jun 2017 07:06:38 -0500
+*Previous Subject: [PATCH] nxp-nfc-appNfc
+*
+*Change-Id: I4183ceb54f99bb8912fc7362e098e964d35f3c4a"
+
+Change-Id: I4d26be24c08d9aff16ef2866559581e31ccbe363
 ---
  Android.mk                      |  2 +-
  AndroidManifest.xml             |  1 -
@@ -78,10 +85,10 @@ index 00198c5..684ce65 100644
  LOCAL_OVERRIDES_PACKAGES := libnfc_nci_jni
  
 diff --git a/nci/jni/NativeNfcAla.cpp b/nci/jni/NativeNfcAla.cpp
-index 2b79ae2..1378b1b 100644
+index 7595ac6..4d37bc6 100644
 --- a/nci/jni/NativeNfcAla.cpp
 +++ b/nci/jni/NativeNfcAla.cpp
-@@ -74,7 +74,7 @@ int nfcManager_GetAppletsList(JNIEnv* e, jobject o, jobjectArray list)
+@@ -76,7 +76,7 @@ int nfcManager_GetAppletsList(JNIEnv* e, jobject o, jobjectArray list)
      (void)e;
      (void)o;
      (void)list;
@@ -90,7 +97,7 @@ index 2b79ae2..1378b1b 100644
      char *name[10];
      UINT8 num =0, xx=0;
      UINT8 list_len = e->GetArrayLength(list);
-@@ -135,7 +135,7 @@ int nfcManager_doAppletLoadApplet(JNIEnv* e, jobject o, jstring name, jbyteArray
+@@ -137,7 +137,7 @@ int nfcManager_doAppletLoadApplet(JNIEnv* e, jobject o, jstring name, jbyteArray
      (void)e;
      (void)o;
      (void)name;
@@ -99,7 +106,7 @@ index 2b79ae2..1378b1b 100644
      ALOGD ("%s: enter", __FUNCTION__);
      tNFA_STATUS wStatus, status;
      IChannel_t Dwp;
-@@ -208,7 +208,7 @@ jbyteArray nfcManager_lsExecuteScript(JNIEnv* e, jobject o, jstring name, jstrin
+@@ -216,7 +216,7 @@ jbyteArray nfcManager_lsExecuteScript(JNIEnv* e, jobject o, jstring name, jstrin
      const UINT8 lsExecuteResponseSize = 4;
      uint8_t resSW [4]={0x4e,0x02,0x69,0x87};
      jbyteArray result = e->NewByteArray(0);
@@ -108,7 +115,7 @@ index 2b79ae2..1378b1b 100644
      ALOGD ("%s: enter", __FUNCTION__);
      tNFA_STATUS wStatus, status;
      IChannel_t Dwp;
-@@ -305,7 +305,7 @@ jbyteArray nfcManager_lsExecuteScript(JNIEnv* e, jobject o, jstring name, jstrin
+@@ -320,7 +320,7 @@ jbyteArray nfcManager_lsExecuteScript(JNIEnv* e, jobject o, jstring name, jstrin
  
  jbyteArray nfcManager_GetCertificateKey(JNIEnv* e, jobject)
  {
@@ -117,7 +124,7 @@ index 2b79ae2..1378b1b 100644
      ALOGD ("%s: enter", __FUNCTION__);
      tNFA_STATUS wStatus = NFA_STATUS_FAILED;
      IChannel_t Dwp;
-@@ -364,7 +364,7 @@ jbyteArray nfcManager_GetCertificateKey(JNIEnv* e, jobject)
+@@ -379,7 +379,7 @@ jbyteArray nfcManager_GetCertificateKey(JNIEnv* e, jobject)
  jbyteArray nfcManager_lsGetVersion(JNIEnv* e, jobject)
  {
  
@@ -127,10 +134,10 @@ index 2b79ae2..1378b1b 100644
      tNFA_STATUS wStatus = NFA_STATUS_FAILED;
      IChannel_t Dwp;
 diff --git a/nci/jni/NativeNfcManager.cpp b/nci/jni/NativeNfcManager.cpp
-index fd6f154..9a947ef 100644
+index 0610ea5..edf3f1d 100644
 --- a/nci/jni/NativeNfcManager.cpp
 +++ b/nci/jni/NativeNfcManager.cpp
-@@ -1631,7 +1631,7 @@ void nfaDeviceManagementCallback (UINT8 dmEvent, tNFA_DM_CBACK_DATA* eventData)
+@@ -1704,7 +1704,7 @@ void nfaDeviceManagementCallback (UINT8 dmEvent, tNFA_DM_CBACK_DATA* eventData)
                  ALOGE ("%s: NFA_DM_NFCC_TIMEOUT_EVT; abort", __FUNCTION__);
              else if (dmEvent == NFA_DM_NFCC_TRANSPORT_ERR_EVT)
                  ALOGE ("%s: NFA_DM_NFCC_TRANSPORT_ERR_EVT; abort", __FUNCTION__);
@@ -139,7 +146,7 @@ index fd6f154..9a947ef 100644
              NFA_HciW4eSETransaction_Complete(Wait);
  #endif
              nativeNfcTag_abortWaits();
-@@ -2081,7 +2081,7 @@ static jboolean nfcManager_doInitialize (JNIEnv* e, jobject o)
+@@ -2164,7 +2164,7 @@ static jboolean nfcManager_doInitialize (JNIEnv* e, jobject o)
          nfcManager_doPartialDeInitialize();
      }
  #endif
@@ -148,16 +155,16 @@ index fd6f154..9a947ef 100644
  if ((signal(SIGABRT, sig_handler) == SIG_ERR) &&
          (signal(SIGSEGV, sig_handler) == SIG_ERR))
      {
-@@ -2201,7 +2201,7 @@ if ((signal(SIGABRT, sig_handler) == SIG_ERR) &&
+@@ -2309,7 +2309,7 @@ if ((signal(SIGABRT, sig_handler) == SIG_ERR) &&
  #endif
                  /////////////////////////////////////////////////////////////////////////////////
                  // Add extra configuration here (work-arounds, etc.)
--#if ((NFC_NXP_ESE ==  TRUE) && (NXP_EXTNS == TRUE))
-+#if ((NFC_NXP_ESE ==  TRUE) && (NXP_EXTNS == FALSE))
+-#if (NXP_EXTNS == TRUE)
++#if (NXP_EXTNS == FALSE)
+ #if (NFC_NXP_ESE ==  TRUE)
  #if ((NXP_ESE_SVDD_SYNC == TRUE) || (NXP_ESE_JCOP_DWNLD_PROTECTION == TRUE) || (NXP_NFCC_SPI_FW_DOWNLOAD_SYNC == TRUE)||(NXP_ESE_DWP_SPI_SYNC_ENABLE == TRUE))
                  isSuccess = createSPIEvtHandlerThread();
- #endif
-@@ -2337,7 +2337,7 @@ static void nfcManager_doEnableDtaMode (JNIEnv* /* e */, jobject /* o */)
+@@ -2447,7 +2447,7 @@ static void nfcManager_doEnableDtaMode (JNIEnv* /* e */, jobject /* o */)
      gIsDtaEnabled = true;
  }
  
@@ -166,7 +173,7 @@ index fd6f154..9a947ef 100644
  /*******************************************************************************
   **
   ** Function:        nfcManager_checkNfcStateBusy()
-@@ -3232,7 +3232,7 @@ static jboolean nfcManager_doDeinitialize (JNIEnv* e, jobject obj)
+@@ -3306,7 +3306,7 @@ static jboolean nfcManager_doDeinitialize (JNIEnv* e, jobject obj)
  #endif
  #endif
      doDwpChannel_ForceExit();
@@ -175,7 +182,7 @@ index fd6f154..9a947ef 100644
      NFA_HciW4eSETransaction_Complete(Wait);
  #endif
      pn544InteropAbortNow ();
-@@ -6140,7 +6140,7 @@ TheEnd:
+@@ -6370,7 +6370,7 @@ TheEnd:
      pthread_exit(NULL);
      return NULL;
  }
@@ -185,10 +192,10 @@ index fd6f154..9a947ef 100644
  **
  ** Function         sig_handler
 diff --git a/nci/jni/NativeSecureElement.cpp b/nci/jni/NativeSecureElement.cpp
-index 747815c..f12cded 100644
+index 94bc38c..60300ff 100644
 --- a/nci/jni/NativeSecureElement.cpp
 +++ b/nci/jni/NativeSecureElement.cpp
-@@ -426,7 +426,7 @@ static jboolean nativeNfcSecureElement_doDisconnectSecureElementConnection (JNIE
+@@ -438,7 +438,7 @@ static jboolean nativeNfcSecureElement_doDisconnectSecureElementConnection (JNIE
      /* if nothing is active after this, then tell the controller to power down */
      if (! PowerSwitch::getInstance ().setModeOff (PowerSwitch::SE_CONNECTED))
          PowerSwitch::getInstance ().setLevel (PowerSwitch::LOW_POWER);
@@ -198,10 +205,10 @@ index 747815c..f12cded 100644
      if (ret_val < 0)
      {
 diff --git a/nci/jni/RoutingManager.cpp b/nci/jni/RoutingManager.cpp
-index c0230fa..1afa74f 100644
+index d46261e..9c37a31 100644
 --- a/nci/jni/RoutingManager.cpp
 +++ b/nci/jni/RoutingManager.cpp
-@@ -2245,7 +2245,7 @@ void RoutingManager::nfaEeCallback (tNFA_EE_EVT event, tNFA_EE_CBACK_DATA* event
+@@ -2332,7 +2332,7 @@ void RoutingManager::nfaEeCallback (tNFA_EE_EVT event, tNFA_EE_CBACK_DATA* event
              }
  
  
@@ -210,7 +217,7 @@ index c0230fa..1afa74f 100644
              if(action.ee_handle == 0x4C0 && (action.trigger != NFC_EE_TRIG_RF_TECHNOLOGY) &&
              ((se.mIsAllowWiredInDesfireMifareCE) || !(action.trigger == NFC_EE_TRIG_RF_PROTOCOL && action.param.protocol == NFA_PROTOCOL_ISO_DEP)))
              {
-@@ -2712,7 +2712,7 @@ int RoutingManager::com_android_nfc_cardemulation_doGetAidMatchingPlatform(JNIEn
+@@ -2815,7 +2815,7 @@ int RoutingManager::com_android_nfc_cardemulation_doGetAidMatchingPlatform(JNIEn
             :When ever the second removal request is also reached , it is handled.
  
  */
@@ -219,7 +226,7 @@ index c0230fa..1afa74f 100644
  void reader_req_event_ntf (union sigval)
  {
      static const char fn [] = "RoutingManager::reader_req_event_ntf";
-@@ -2756,7 +2756,7 @@ void *ee_removed_ntf_handler_thread(void* /* data */)
+@@ -2859,7 +2859,7 @@ void *ee_removed_ntf_handler_thread(void* /* data */)
      ALOGD ("%s: Enter: ", fn);
      rm.mResetHandlerMutex.lock();
      ALOGD ("%s: enter sEseRemovedHandlerMutex lock", fn);
@@ -229,10 +236,10 @@ index c0230fa..1afa74f 100644
  #endif
  #if((NFC_NXP_ESE == TRUE) && (NXP_WIRED_MODE_STANDBY == TRUE))
 diff --git a/nci/jni/SecureElement.cpp b/nci/jni/SecureElement.cpp
-index 1b615b0..36a3b88 100644
+index 9307fd8..0433235 100644
 --- a/nci/jni/SecureElement.cpp
 +++ b/nci/jni/SecureElement.cpp
-@@ -141,7 +141,7 @@ namespace android
+@@ -137,7 +137,7 @@ namespace android
      static void setSPIState(bool mState);
  //////////////////////////////////////////////
  //////////////////////////////////////////////
