@@ -3,13 +3,13 @@
 ### Kernel
 This device tree is intended to be used with this kernel repo:
 
-See: https://github.com/Meticulus/android_kernel_huawei_hi6250
+See: https://github.com/Exagone313/android_kernel_huawei_hi6250
 
 branch: master
 ### Vendor
 This device tree is intented to be used with this vendor repo
 
-https://github.com/Meticulus/android_vendor_huawei_hi6250
+https://github.com/Exagone313/android_vendor_huawei_hi6250
 
 branch: master
 # How To Build
@@ -60,37 +60,21 @@ WARNING: There may be times, towards the end when it seem like, the download is 
 
 The local manifest is different for every device. It contains those repos that are device specific, where as the ROM code you just "repo sync'd" is code that is general to any device.
 
-NOTE: Meticulus Development also builds some extra features and functions into its builds and we include the source for those builds in this tree as well. If you would like to include those "extras", then when asked to issue the "./patch.sh" command, include the keyword "meticulus" after it e.g. "./patch.sh meticulus". We respectfully ask that you do not publish or distribute these builds.
-
 Execute the following commands in a linux terminal:
 ```bash
 mkdir /home/$USER/los/.repo/local_manifests
-gedit /home/$USER/los/.repo/local_manifests/hi6250.xml
+vim /home/$USER/los/.repo/local_manifests/hi6250.xml
 ```
 Copy the following into hi6250.xml, save and close.
 ```bash
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-  <project name="Meticulus/android_kernel_huawei_hi6250" path="kernel/huawei/hi6250" remote="github" revision="master"/>
-  <project name="Meticulus/android_device_huawei_hi6250" path="device/huawei/hi6250" remote="github" revision="master"/>
-  <project name="Meticulus/android_vendor_huawei_hi6250" path="vendor/huawei/hi6250" remote="github" revision="master"/>
+  <project name="Exagone313/android_kernel_huawei_hi6250" path="kernel/huawei/hi6250" remote="github" revision="master"/>
+  <project name="Exagone313/android_device_huawei_hi6250" path="device/huawei/hi6250" remote="github" revision="cm-14.1"/>
+  <project name="Exagone313/android_vendor_huawei_hi6250" path="vendor/huawei/hi6250" remote="github" revision="master"/>
   <project name="LineageOS/android_vendor_nxp-nfc_opensource_Nfc" path="vendor/nxp-nfc/opensource/Nfc" remote="github" revision="cm-14.1"/>
   <project name="LineageOS/android_vendor_nxp-nfc_opensource_libnfc-nci" path="vendor/nxp-nfc/opensource/libnfc-nci" remote="github" revision="cm-14.1"/>
   <project name="LineageOS/android_vendor_nxp-nfc_opensource_frameworks" path="vendor/nxp-nfc/opensource/frameworks" remote="github" revision="cm-14.1"/>
-</manifest>
-```
-
-Alternatively, if you would like to include Meticulus Development's "extras" then copy the following into hi6250.xml, save and close.
-```bash
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest>
-  <project name="Meticulus/android_kernel_huawei_hi6250" path="kernel/huawei/hi6250" remote="github" revision="master"/>
-  <project name="Meticulus/android_device_huawei_hi6250" path="device/huawei/hi6250" remote="github" revision="master"/>
-  <project name="Meticulus/android_vendor_huawei_hi6250" path="vendor/huawei/hi6250" remote="github" revision="master"/>
-  <project name="LineageOS/android_vendor_nxp-nfc_opensource_Nfc" path="vendor/nxp-nfc/opensource/Nfc" remote="github" revision="cm-14.1"/>
-  <project name="LineageOS/android_vendor_nxp-nfc_opensource_libnfc-nci" path="vendor/nxp-nfc/opensource/libnfc-nci" remote="github" revision="cm-14.1"/>
-  <project name="LineageOS/android_vendor_nxp-nfc_opensource_frameworks" path="vendor/nxp-nfc/opensource/frameworks" remote="github" revision="cm-14.1"/>
-  <project name="Meticulus/android_packages_CodinalteParts" path="packages/apps/CodinalteParts" remote="github" revision="hi6250"/>
 </manifest>
 ```
 
