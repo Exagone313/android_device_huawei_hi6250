@@ -27,23 +27,20 @@
 #include <cutils/klog.h>
 #include <sys/system_properties.h>
 #include <unistd.h>
-static char PRODUCT_PATH[] = "/sys/firmware/devicetree/base/hisi,product_name";
-static char MULTI_RILD_PROP[] = "ro.multi.rild";
-static char CONFIG_MULTI_RILD_PROP[] = "ro.config.multirild";
+#define BASE "/sys/firmware/devicetree/base/"
+#define PRODUCT_PATH BASE"hisi,product_name"
+#define MULTI_RILD_PROP "ro.multi.rild"
+#define CONFIG_MULTI_RILD_PROP "ro.config.multirild"
 /* 
  * Meticulus: even though this prop is mispelled, it might be that
  * this prop was originally misspelled by Huawei, and therefore
  * does work properly. 
  */
-static char CONFIG_MULI_RILD_PROP[] = "ro.config.mulirild";
-static char BOARDID_PRODUCT_PROP[] = "ro.boardid.product";
-static char PRODUCT_MODEL_PROP[] = "ro.product.model";
+#define CONFIG_MULI_RILD_PROP "ro.config.mulirild"
+#define BOARDID_PRODUCT_PROP "ro.boardid.product"
+#define PRODUCT_MODEL_PROP "ro.product.model"
 
-static char TRUE[] = "true";
-static char FALSE[] = "false";
-static char AUTO[] = "auto";
-
-static char model[PROP_VALUE_MAX] = "hi6250";
+static char *model = "hi6250";
 
 extern "C" int __system_property_add(char *key,int ksize,char * value,int vsize);
 extern "C" const prop_info * __system_property_find(const char * name);
@@ -86,64 +83,75 @@ static int read_int(char * path) {
 }
 
 void vendor_load_default_properties() {
-
-    char boardid[PROP_VALUE_MAX];
-
-    *model = * read_string(PRODUCT_PATH);
-
+    model = read_string(PRODUCT_PATH);
     klog_write(0,"libhuawei_init: model is %s\n",model);
 
-    /* All P9-Lite needs this */
-    if(!strncmp(model,"VNS", 3))
-	sprintf(boardid, "%s", "51312");
-    /* All Honor 5c/Honor 7 lite needs this */
-    else if(!strncmp(model, "NEM", 3) || !strncmp(model, "NMO", 3))
-	sprintf(boardid, "%s", "4871");
+    /* bail if model is NULL */
+    if(!model)
+	return;
 
-    set_property(BOARDID_PRODUCT_PROP, boardid);
+    /* All P9-Lite needs this */
+    if(!strncmp(model,"VNS", 3)) 
+	set_property(BOARDID_PRODUCT_PROP,"51312");
+    /* All Honor 5c/Honor 7 lite needs this */
+    if(!strncmp(model, "NEM", 3) || !strncmp(model, "NMO", 3))
+	set_property(BOARDID_PRODUCT_PROP, "4871");
 
     /* These have renamed model */
-    if(!strcmp(model, "NMO-L21")) {
-	sprintf(model,"%s","NEM-L51");
-    }
+    if(!strcmp(model, "NMO-L21"))
+	model = "NEM-L51"; 
 
     /* if a match is not found the values in the build.prop will be used.
      * ro.boardid.product will not be set so the camera will not work.
      */
 }
-
-void set_if_not_set_to(char * name, char * if_not_set_to, char * new_value) {
-    char value[PROP_VALUE_MAX];
-    if(!property_get(name, value, if_not_set_to))
-	klog_write(0, "libhuawei_init: Could not get property %s\n", name);
-    else if(!strcmp(value,if_not_set_to))
-	    set_property(name , new_value);
-
-}
-
-void set_model() {
+void vendor_load_system_properties() {
     char lmodel[PROP_VALUE_MAX];
-
+    char multiril[PROP_VALUE_MAX];
+    char configmultiril[PROP_VALUE_MAX];
+    char configmuliril[PROP_VALUE_MAX];
     if(!property_get(PRODUCT_MODEL_PROP,lmodel,"hi6250"))
 	klog_write(0, "libhuawei_init: Could not get property %s\n",PRODUCT_MODEL_PROP);
     else if(!strcmp(lmodel,"hi6250"))
 	update_property(PRODUCT_MODEL_PROP,model);
 
-}
-void vendor_load_system_properties() {
-
-    set_model();
-
-    if(!strcmp(model, "VNS-L31") ||
+    if(!property_get(MULTI_RILD_PROP,multiril, "auto"))
+	klog_write(0, "libhuawei_init: Could not get property %s\n",MULTI_RILD_PROP);
+    else if(!strcmp(multiril,"auto")) {
+    /* These models need ro.multi.rild true */
+	if(!strcmp(model, "VNS-L31") ||
 	    !strcmp(model, "VNS-L22") ||
 	    !strcmp(model, "NEM-L21")) {
-	set_if_not_set_to(MULTI_RILD_PROP, AUTO, TRUE);
-	set_if_not_set_to(CONFIG_MULTI_RILD_PROP, AUTO, TRUE);
-	set_if_not_set_to(CONFIG_MULI_RILD_PROP, AUTO, TRUE);
-    } else {
-	set_if_not_set_to(MULTI_RILD_PROP, AUTO, TRUE);
-	set_if_not_set_to(CONFIG_MULTI_RILD_PROP, AUTO, TRUE);
-	set_if_not_set_to(CONFIG_MULI_RILD_PROP, AUTO, TRUE);
+	    set_property(MULTI_RILD_PROP, "true");
+	} else {
+	    set_property(MULTI_RILD_PROP, "false");
+	}
+    }
+
+    if(!property_get(CONFIG_MULTI_RILD_PROP,configmultiril, "auto"))
+	klog_write(0, "libhuawei_init: Could not get property %s\n",CONFIG_MULTI_RILD_PROP);
+    else if(!strcmp(configmultiril,"auto")) {
+    /* These models need ro.multi.rild true */
+	if(!strcmp(model, "VNS-L31") ||
+	    !strcmp(model, "VNS-L22") ||
+	    !strcmp(model, "NEM-L21")) {
+	    set_property(CONFIG_MULTI_RILD_PROP, "true");
+	} else {
+	    set_property(CONFIG_MULTI_RILD_PROP, "false");
+	}
+    }
+
+    if(!property_get(CONFIG_MULI_RILD_PROP,configmuliril, "auto"))
+	klog_write(0, "libhuawei_init: Could not get property %s\n",CONFIG_MULI_RILD_PROP);
+    else if(!strcmp(configmuliril,"auto")) {
+    /* These models need ro.multi.rild true */
+	if(!strcmp(model, "VNS-L31") ||
+	    !strcmp(model, "VNS-L22") ||
+	    !strcmp(model, "NEM-L21")) {
+	    set_property(CONFIG_MULI_RILD_PROP, "true");
+	} else {
+	    set_property(CONFIG_MULI_RILD_PROP, "false");
+	}
     }
 }
 
