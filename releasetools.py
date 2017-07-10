@@ -51,7 +51,6 @@ def FullOTA_Assertions(info):
   info.output_zip.write(os.path.join(TARGET_DIR, "install/bin/stock-check.sh"), "install/bin/stock-check.sh")
   info.output_zip.write(os.path.join(TARGET_DIR, "system/bin/volumeinput"), "install/bin/volumeinput")
 
-  info.script.AppendExtra('assert(getprop("ro.build.user") == "meticulus" || abort("This ROM can not be installed with this recovery. Meticulus Development\'s TWRP is required!- http://www.meticulus.co.vu/p/twrp-for-huawei-p9-lite.html"););')
   info.script.AppendExtra('package_extract_dir("install", "/tmp/install");')
 
   info.script.AppendExtra('assert(run_program("/sbin/chmod","755", "/tmp/install/bin/stock-check.sh") == 0 || abort("Could not chmod stock-check"););')

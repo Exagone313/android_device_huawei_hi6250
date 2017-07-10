@@ -38,7 +38,6 @@ $(call inherit-product, build/target/product/core_64_bit.mk)
 # Ramdisk
 PRODUCT_COPY_FILES += \
         $(LOCAL_PATH)/rootdir/init.hi6250.rc:root/init.hi6250.rc \
-        $(LOCAL_PATH)/rootdir/init.meticulus.rc:root/init.meticulus.rc \
         $(LOCAL_PATH)/rootdir/init.platform.rc:root/init.platform.rc \
         $(LOCAL_PATH)/rootdir/init.hisi.rc:root/init.hisi.rc \
         $(LOCAL_PATH)/rootdir/init.connectivity.hisi.rc:root/init.connectivity.hisi.rc \
@@ -78,11 +77,6 @@ PRODUCT_COPY_FILES += \
         $(LOCAL_PATH)/rootdir/sbin/volisnotd:root/sbin/volisnotd \
         $(LOCAL_PATH)/rootdir/sbin/ntfs-3gd:root/sbin/ntfs-3gd \
         $(LOCAL_PATH)/rootdir/sbin/logctl_service:root/sbin/logctl_service
-
-ifneq ($(BOOTDEBUG),)
-PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/rootdir/init.bootdebug.rc:root/init.bootdebug.rc
-endif
 
 # Recovery ramdisk, libraries and modules.
 PRODUCT_COPY_FILES += \
