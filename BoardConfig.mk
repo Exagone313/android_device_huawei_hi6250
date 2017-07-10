@@ -147,7 +147,6 @@ TW_CRYPTO_KEY_LOC := "footer"
 ifneq ($(TARGET_PRODUCT), omni_hi6250)
 TW_USE_TOOLBOX := true
 endif
-TW_EXCLUDE_SUPERSU := false
 TW_EXTRA_LANGUAGES := true
 
 
